@@ -1,2 +1,1 @@
-# test.ssh
-ok pro on github
+# test.ssh ok
