@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "javascript/react30"
+		},
+		{
+			"path": "htmlcss"
+		},
+		{
+			"path": "hoidanit"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "htmlcss",
+		"liveServer.settings.port": 5501
+	}
+}

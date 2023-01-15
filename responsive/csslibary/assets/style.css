@@ -1,0 +1,44 @@
+
+
+
+
+
+
+
+.item {
+    margin-top: 16px;
+    font-size: 40px;
+    color: sienna;
+    text-align: center;
+    min-height: 100px; 
+    line-height: 100px;
+    background-color: orange;
+}
+
+
+
+.main {
+    display: flex;
+
+}
+
+.slidebar {
+    width: 300px;
+     background-color: aliceblue ;
+}
+
+.content {
+   flex:1;
+
+}
+
+@media (min-width:739px) and (max-width:1023px) {
+    .hide-on-tablet {
+        display: none;   
+    }    
+}          
+@media  (max-width:738px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
