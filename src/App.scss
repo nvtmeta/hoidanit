@@ -1,11 +1,77 @@
 .app-container {
   .header-container {
-    .navbar-nav .nav-link.active {
-      color: red;
+    margin: 0 30px 0 30px;
+    font-weight: 500;
+    .navbar {
+      z-index: 10;
+      background-color: rgba(0, 0, 0, 0) !important;
+      .nav-link.active {
+        color: rgb(114, 175, 224);
+      }
+    }
+
+    .btn-signIn {
+      padding: 0 15px;
+      border-radius: 10px;
+      margin: 0 20px 0 40px;
+      &:hover {
+        color: rgb(114, 175, 224);
+      }
+      border: 1px solid rgb(114, 175, 224);
+    }
+    .btn-signUp {
+      padding: 0 15px;
+      border-radius: 10px;
+      background-color: rgb(114, 175, 224);
+      color: white;
+      border: 1px solid rgb(114, 175, 224);
     }
   }
   .main-container {
   }
   .app-content {
+    .home-container {
+      video {
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
+      }
+    }
+    .home-content {
+      gap: 34px;
+      width: 50%;
+      padding: 100px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      .heading {
+        font-size: 3.6rem;
+        font-weight: 400;
+      }
+      .sub1 {
+        font-size: 1.6rem;
+        font-weight: 400;
+      }
+      .titleBtn {
+        cursor: pointer;
+        justify-content: center;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 1.5;
+        color: rgb(255, 255, 255);
+        border-radius: 4px;
+        transition: background-color 0.2s ease-out 0s, border-color, color,
+          opacity;
+        padding: 12px 0;
+        background: rgb(38, 38, 39);
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(38, 38, 39);
+        border-image: initial;
+        width: 50%;
+      }
+    }
   }
 }

@@ -7,9 +7,11 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink } from "react-router-dom";
 function Header() {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className="header">
       <Container fluid>
-        <Navbar.Brand href="#">NVT</Navbar.Brand>
+        <NavLink to="/" className="navbar-brand">
+          Amazon
+        </NavLink>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -26,29 +28,17 @@ function Header() {
             <NavLink className="nav-link" to="/admin">
               Admin
             </NavLink>
-
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
           </Nav>
 
           <Nav>
             <NavDropdown title="Setting" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
-              </NavDropdown.Item>
+              <NavDropdown.Item>Action</NavDropdown.Item>
+              <NavDropdown.Item>Another action</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
+              <NavDropdown.Item>Something else here</NavDropdown.Item>
             </NavDropdown>
+            <button className="btn-signIn">Sign in</button>
+            <button className="btn-signUp">Sign up</button>
           </Nav>
         </Navbar.Collapse>
       </Container>
