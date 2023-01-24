@@ -1,5 +1,17 @@
 .manage-container {
+  padding: 10px;
   .create-user {
+  }
+  .title {
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+  .btn-add-new {
+    border: none;
+    border-radius: 10px;
+    margin: 15px 0;
+  }
+  .table-users-container {
   }
 }
 
