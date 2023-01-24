@@ -1,25 +1,12 @@
 import { useState, useEffect } from "react";
 import { getAllUsers } from "../../../services/apiService";
-function TableUser() {
-  const [listUser, setListUser] = useState([]);
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
-    let res = await getAllUsers();
-    console.log(res);
-    if (res.EC === 0) {
-      setListUser(res.DT);
-    }
-  };
+function TableUser({ listUser, fetchUser }) {
   return (
     <>
       <table className="table table-hover table-border">
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
             <th scope="col">role</th>
@@ -32,7 +19,7 @@ function TableUser() {
             listUser.map((item, index) => {
               return (
                 <tr key={index}>
-                  <th scope="row">{index + 1}</th>
+                  <th scope="row">{item.id}</th>
                   <td>{item.email}</td>
                   <td>{item.username}</td>
                   <td>{item.role}</td>
@@ -46,7 +33,7 @@ function TableUser() {
             })}
           {listUser && listUser.length === 0 && (
             <tr>
-              <td>Invalid data</td>
+              <td colSpan={"4"}>Invalid data</td>
             </tr>
           )}
         </tbody>
