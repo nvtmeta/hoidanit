@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { postCreateUser } from "../../../services/apiService";
-
-export default function ModalCreateUser({ show, setShow, fetchUser }) {
+import _ from "lodash";
+export default function ModalUpdateUser({ show, setShow, dataUpdate }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [role, setRole] = useState("User");
+  console.log(dataUpdate.username);
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setEmail(dataUpdate.email);
+      setName(dataUpdate.username);
+      setRole(dataUpdate.role);
+      setImage("");
+      if (dataUpdate.image) {
+        setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+      }
+    }
+  }, [dataUpdate]);
 
   const handleClose = () => {
     setShow(false);
@@ -50,15 +62,15 @@ export default function ModalCreateUser({ show, setShow, fetchUser }) {
       return;
     }
 
-    let data = await postCreateUser(email, password, name, role, image);
-    if (data && data.EC === 0) {
-      toast.success(data.EM);
-      handleClose();
-      await fetchUser();
-    }
-    if (data && data.EC !== 0) {
-      toast.error(data.EM);
-    }
+    // let data = await postCreateUser(email, password, name, role, image);
+    // if (data && data.EC === 0) {
+    //   toast.success(data.EM);
+    //   handleClose();
+    //   await fetchUser();
+    // }
+    // if (data && data.EC !== 0) {
+    //   toast.error(data.EM);
+    // }
   };
 
   const handleImage = (e) => {
@@ -76,7 +88,7 @@ export default function ModalCreateUser({ show, setShow, fetchUser }) {
         className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add new user</Modal.Title>
+          <Modal.Title>Update a user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
@@ -87,6 +99,7 @@ export default function ModalCreateUser({ show, setShow, fetchUser }) {
                 className="form-control"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled
               />
             </div>
             <div className="col-md-6">
@@ -96,6 +109,7 @@ export default function ModalCreateUser({ show, setShow, fetchUser }) {
                 className="form-control"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled
               />
             </div>
 
@@ -131,7 +145,10 @@ export default function ModalCreateUser({ show, setShow, fetchUser }) {
                 onChange={(e) => handleImage(e)}
               />
             </div>
-            <div className="col-md-12 image-preview">
+            <div
+              className="col-md-12 image-preview"
+              style={{ textAlign: "center" }}
+            >
               {previewImage ? (
                 <img src={previewImage} alt="preview"></img>
               ) : (

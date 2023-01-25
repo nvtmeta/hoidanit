@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import { getAllUsers } from "../../../services/apiService";
-function TableUser({ listUser, fetchUser }) {
+function TableUser({ listUser, handleUpdate }) {
   return (
     <>
       <table className="table table-hover table-border">
@@ -25,7 +23,14 @@ function TableUser({ listUser, fetchUser }) {
                   <td>{item.role}</td>
                   <td>
                     <button className="btn btn-secondary">View</button>
-                    <button className="btn btn-primary mx-3">Update</button>
+                    <button
+                      className="btn btn-primary mx-3"
+                      onClick={() => {
+                        handleUpdate(item);
+                      }}
+                    >
+                      Update
+                    </button>
                     <button className="btn btn-danger">Delete</button>
                   </td>
                 </tr>
