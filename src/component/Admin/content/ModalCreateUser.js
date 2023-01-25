@@ -132,6 +132,7 @@ export default function ModalCreateUser({ show, setShow, fetchUser }) {
               />
             </div>
             <div className="col-md-12 image-preview">
+              {console.log(previewImage)}{" "}
               {previewImage ? (
                 <img src={previewImage} alt="preview"></img>
               ) : (

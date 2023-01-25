@@ -3,16 +3,21 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
-import { postCreateUser } from "../../../services/apiService";
+import { postUpdateUser } from "../../../services/apiService";
 import _ from "lodash";
-export default function ModalUpdateUser({ show, setShow, dataUpdate }) {
+export default function ModalUpdateUser({
+  show,
+  setShow,
+  dataUpdate,
+  fetchUser,
+  setDataUpdate,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [role, setRole] = useState("User");
-  console.log(dataUpdate.username);
   useEffect(() => {
     if (!_.isEmpty(dataUpdate)) {
       setEmail(dataUpdate.email);
@@ -33,49 +38,27 @@ export default function ModalUpdateUser({ show, setShow, dataUpdate }) {
     setImage("");
     setPreviewImage("");
     setRole("User");
+    setDataUpdate({});
   };
 
   const handleSubmit = async () => {
-    // let data = {
-    //   email: email,
-    //   password: password,
-    //   username: name,
-    //   role: role,
-    //   userImage: image,
-
-    // }
-    //validateEmail
-    const validateEmail = (email) => {
-      return String(email)
-        .toLowerCase()
-        .match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-    };
-    const isValidEmail = validateEmail(email);
-    if (!isValidEmail) {
-      toast.error("Invalid email");
-      return;
+    let data = await postUpdateUser(dataUpdate.id, name, role, image);
+    if (data && data.EC === 0) {
+      console.log(image);
+      toast.success(data.EM);
+      handleClose();
+      await fetchUser();
     }
-    if (!password) {
-      toast.error("Invalid password");
-      return;
+    if (data && data.EC !== 0) {
+      toast.error(data.EM);
     }
-
-    // let data = await postCreateUser(email, password, name, role, image);
-    // if (data && data.EC === 0) {
-    //   toast.success(data.EM);
-    //   handleClose();
-    //   await fetchUser();
-    // }
-    // if (data && data.EC !== 0) {
-    //   toast.error(data.EM);
-    // }
   };
 
   const handleImage = (e) => {
-    setPreviewImage(URL.createObjectURL(e.target.files[0]));
-    setImage(e.target.files[0]);
+    if (e.target && e.target.files && e.target.files[0]) {
+      setPreviewImage(URL.createObjectURL(e.target.files[0]));
+      setImage(e.target.files[0]);
+    }
   };
   return (
     <>
