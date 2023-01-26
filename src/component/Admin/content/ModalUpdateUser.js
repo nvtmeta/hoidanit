@@ -11,6 +11,8 @@ export default function ModalUpdateUser({
   dataUpdate,
   fetchUser,
   setDataUpdate,
+  currentPage,
+  setCurrentPage,
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,10 +46,10 @@ export default function ModalUpdateUser({
   const handleSubmit = async () => {
     let data = await postUpdateUser(dataUpdate.id, name, role, image);
     if (data && data.EC === 0) {
-      console.log(image);
       toast.success(data.EM);
       handleClose();
-      await fetchUser();
+      await fetchUser(currentPage);
+      // await fetchUser();
     }
     if (data && data.EC !== 0) {
       toast.error(data.EM);
