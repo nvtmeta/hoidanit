@@ -29,7 +29,7 @@ function ManageUser() {
   //   if (res.EC === 0) {
   //     setListUser(res.DT);
   //   }
-  // };
+  // }; //idsicncd
   const fetchPaginateUser = async (page) => {
     let res = await getUserPaginate(page, LIMIT_USER);
     console.log(res.DT.totalPages);
