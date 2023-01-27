@@ -70,23 +70,26 @@ function SignUp() {
               }}
               value={email}
             ></input>
-            <label className="email-password">Password (*)</label>{" "}
-            <input
-              required
-              className="input-form"
-              type={!isVisible ? "password" : "text"}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              value={password}
-            ></input>
-            <span>
-              <FontAwesomeIcon
-                icon={isVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
-                className="icon-eye"
-                onClick={toggle}
-              />
-            </span>
+            <div className="password-form">
+              {" "}
+              <label className="email-password">Password (*)</label>{" "}
+              <input
+                required
+                className="input-form"
+                type={!isVisible ? "password" : "text"}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                value={password}
+              ></input>
+              <span>
+                <FontAwesomeIcon
+                  icon={isVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
+                  className="icon-eye"
+                  onClick={toggle}
+                />
+              </span>
+            </div>
             <label className="email-password">Username</label>
             <input
               className="input-form"
