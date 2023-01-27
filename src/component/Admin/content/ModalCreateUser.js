@@ -5,7 +5,13 @@ import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { postCreateUser } from "../../../services/apiService";
 
-export default function ModalCreateUser({ show, setShow, fetchUser }) {
+export default function ModalCreateUser({
+  show,
+  setShow,
+  fetchUser,
+  currentPage,
+  setCurrentPage,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -54,7 +60,9 @@ export default function ModalCreateUser({ show, setShow, fetchUser }) {
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await fetchUser();
+      setCurrentPage(1);
+      await fetchUser(1);
+      // await fetchUser();
     }
     if (data && data.EC !== 0) {
       toast.error(data.EM);
