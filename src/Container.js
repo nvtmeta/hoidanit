@@ -10,7 +10,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas, faHome } from "@fortawesome/free-solid-svg-icons";
-
+import SignUp from "./component/Authentication/SignUp";
 library.add(fas, faHome);
 function Container() {
   return (
@@ -26,6 +26,7 @@ function Container() {
             <Route index element={<DashBoard />}></Route>
           </Route>
           <Route path="login" element={<Login />}></Route>
+          <Route path="signup" element={<SignUp />}></Route>
         </Routes>
       </BrowserRouter>
       <ToastContainer

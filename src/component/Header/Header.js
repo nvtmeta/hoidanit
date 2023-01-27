@@ -44,7 +44,9 @@ function Header() {
             <button className="btn-signIn" onClick={handleLogin}>
               Sign in
             </button>
-            <button className="btn-signUp">Sign up</button>
+            <button className="btn-signUp" onClick={() => navigate("/signup")}>
+              Sign up
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Container>

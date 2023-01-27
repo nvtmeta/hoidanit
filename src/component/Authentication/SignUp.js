@@ -1,26 +1,25 @@
-import "./Login.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
-
-function Login() {
+import "./signup.scss";
+import { postSignUp } from "../../services/apiService";
+function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUsername] = useState("");
   const handleLogin = async () => {
     //validate
 
     //submit API
-    let res = await postLogin(email, password);
-    console.log(res.EC !== 0);
+    let res = await postSignUp(email, password, userName);
     if (res && res.EC === 0) {
       toast.success(res.EM);
-      navigate("/");
+      navigate("/login");
       // await fetchUser();
     }
-    if (res && +res.EC !== 0) {
+    if (res && res.EC !== 0) {
       toast.error(res.EM);
     }
   };
@@ -28,20 +27,20 @@ function Login() {
     <>
       <div className="login-container">
         <div className="header ">
-          Don't have an account yet ?
+          <span>Already have an account ?</span>
           <button
             className="btn-login-header"
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/login")}
           >
-            Sign up
+            Login
           </button>
         </div>
 
         <div className="title col-4 mx-auto">Amazon</div>
-        <div className="welcome col-4 mx-auto">Hello , who's this ?</div>
+        <div className="welcome col-4 mx-auto">Build your world !</div>
         <div className="content col-4 mx-auto">
           <div className="form-group ">
-            <label className="email-label">Email</label>
+            <label className="email-label">Email (*)</label>
             <input
               className="input-form"
               type="email"
@@ -50,7 +49,7 @@ function Login() {
               }}
               value={email}
             ></input>
-            <label className="email-password">Password</label>
+            <label className="email-password">Password (*)</label>
             <input
               className="input-form"
               type="password"
@@ -59,13 +58,21 @@ function Login() {
               }}
               value={password}
             ></input>
+            <label className="email-password">Username</label>
+            <input
+              className="input-form"
+              type=""
+              value={userName}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            ></input>
           </div>
           <div className=" footer-login col-4 mx-auto ">
-            <span className="forgot-password">Forgot password ?</span>
             <div>
               {" "}
               <button className="btn-login" onClick={handleLogin}>
-                Login to Amazon
+                Create your Amazon's account
               </button>
             </div>
             <div
@@ -82,4 +89,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;
