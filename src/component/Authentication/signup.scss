@@ -34,18 +34,27 @@
   }
   .content {
     .form-group {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 10px;
       .email-label {
       }
+
       .input-form {
+        width: 100%;
         margin-bottom: 15px;
         height: 40px;
         border: 1px solid #ccc;
         border-radius: 10px;
         outline: none;
       }
+      .icon-eye {
+        top: 144px;
+        left: 400px;
+        position: absolute;
+      }
+
       .email-password {
       }
     }
