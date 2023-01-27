@@ -4,10 +4,14 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate("/login");
+  };
   return (
-    <Navbar bg="light" expand="lg" className="header">
+    <Navbar bg="light" expand="lg" c lassName="header">
       <Container fluid>
         <NavLink to="/" className="navbar-brand">
           Amazon
@@ -37,7 +41,9 @@ function Header() {
               <NavDropdown.Divider />
               <NavDropdown.Item>Something else here</NavDropdown.Item>
             </NavDropdown>
-            <button className="btn-signIn">Sign in</button>
+            <button className="btn-signIn" onClick={handleLogin}>
+              Sign in
+            </button>
             <button className="btn-signUp">Sign up</button>
           </Nav>
         </Navbar.Collapse>
