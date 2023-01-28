@@ -5,14 +5,17 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "./Container";
 import { Provider } from "react-redux";
-import store from "../src/redux/store";
+import { store, persistor } from "../src/redux/store";
 import "nprogress/nprogress.css";
+import { PersistGate } from "redux-persist/integration/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <Container />
-    </React.StrictMode>
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <Container />
+      </React.StrictMode>
+    </PersistGate>
   </Provider>
 );
 
