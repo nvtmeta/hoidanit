@@ -4,11 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
-
+import { useDispatch } from "react-redux";
+import ActionLogin from "../../redux/LoginAction/actionLogin";
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.keyCode === 13) {
+      handleLogin();
+    }
+  };
   const handleLogin = async () => {
     //validate
 
@@ -16,6 +24,7 @@ function Login() {
     let res = await postLogin(email, password);
     console.log(res.EC !== 0);
     if (res && res.EC === 0) {
+      dispatch(ActionLogin(res));
       toast.success(res.EM);
       navigate("/");
       // await fetchUser();
@@ -58,6 +67,7 @@ function Login() {
                 setPassword(e.target.value);
               }}
               value={password}
+              onKeyDown={(e) => handleKeypress(e)}
             ></input>
           </div>
           <div className=" footer-login col-4 mx-auto ">

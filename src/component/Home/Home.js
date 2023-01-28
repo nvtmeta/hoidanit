@@ -1,4 +1,5 @@
 import videoHomepage from "../../assets/video-homepage.mp4";
+import { useSelector } from "react-redux";
 function Home() {
   return (
     <div className="home-container">
