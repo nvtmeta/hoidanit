@@ -28,12 +28,16 @@ const deleteUser = (userId) => {
 const getUserPaginate = (page, limit) => {
   return axios.get(`api/v1/participant?page=${page}&limit=${limit}`);
 };
-const postLogin = (email, password) => {
-  return axios.post(`http://localhost:8081/api/v1/login`, { email, password });
+const postLogin = (em, pass) => {
+  return axios.post(`api/v1/login`, {
+    email: em,
+    password: pass,
+    delay: 3000,
+  });
 };
 
 const postSignUp = (email, password, userName) => {
-  return axios.post("http://localhost:8081/api/v1/register", {
+  return axios.post("api/v1/register", {
     email,
     password,
     userName,

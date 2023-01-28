@@ -68,6 +68,30 @@
         &:hover {
           background-color: #333;
         }
+        &:disabled {
+          background-color: #bbb;
+          color: #000;
+          cursor: no-drop;
+          &:hover {
+            background-color: #bbb;
+          }
+        }
+
+        .loaderIcon {
+          color: rgb(69, 142, 214);
+          margin-right: 7px;
+          top: 2px;
+          animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+          from {
+            transform: scale(1) rotate(0deg);
+          }
+          to {
+            transform: scale(1) rotate(360deg);
+          }
+        }
       }
 
       .btn-returnHome {

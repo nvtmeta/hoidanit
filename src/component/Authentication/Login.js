@@ -6,11 +6,13 @@ import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import ActionLogin from "../../redux/LoginAction/actionLogin";
+import { ImSpinner6 } from "react-icons/im";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [IsLoading, setIsLoading] = useState(false);
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
     if (e.keyCode === 13) {
@@ -19,13 +21,30 @@ function Login() {
   };
   const handleLogin = async () => {
     //validate
-
+    const validateEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
+    const isValidEmail = validateEmail(email);
+    if (!isValidEmail) {
+      toast.error("Invalid email");
+      return;
+    }
+    if (!password) {
+      toast.error("Invalid password");
+      return;
+    }
+    setIsLoading(true);
     //submit API
     let res = await postLogin(email, password);
     console.log(res.EC !== 0);
     if (res && res.EC === 0) {
       dispatch(ActionLogin(res));
       toast.success(res.EM);
+      setIsLoading(false);
       navigate("/");
       // await fetchUser();
     }
@@ -73,8 +92,12 @@ function Login() {
           <div className=" footer-login col-4 mx-auto ">
             <span className="forgot-password">Forgot password ?</span>
             <div>
-              {" "}
-              <button className="btn-login" onClick={handleLogin}>
+              <button
+                className="btn-login"
+                onClick={handleLogin}
+                disabled={IsLoading}
+              >
+                {IsLoading === true && <ImSpinner6 className="loaderIcon" />}{" "}
                 Login to Amazon
               </button>
             </div>
