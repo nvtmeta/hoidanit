@@ -1,9 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { getQuizData } from "../../services/apiService";
 import _ from "lodash";
+import "./DetailQuiz.scss";
 const DetailQuiz = () => {
   const params = useParams();
+  const location = useLocation();
+  console.log(location);
   const quizId = params.id;
   useEffect(() => {
     fetchQuiz();
@@ -12,7 +15,6 @@ const DetailQuiz = () => {
   const fetchQuiz = async () => {
     const res = await getQuizData(quizId);
     if (res && res.EC === 0) {
-      console.log(res.DT);
       let raw = res.DT;
       let data = _.chain(raw)
 
@@ -33,10 +35,32 @@ const DetailQuiz = () => {
           return { questionId: key, answers, questionDescription, image };
         })
         .value();
-      console.log(data);
     }
   };
-  return <div>scasc</div>;
+  return (
+    <div className="detail-quiz-container">
+      <div className="left-content">
+        <div className="title"> Quiz 1: {location?.state?.quizTitle}</div>
+        <hr />
+        <div className="q-body">
+          <img alt="" />
+        </div>
+        <div className="q-content">
+          <div className="question">Q1: What the hell?</div>
+          <div className="answer">
+            <div className="A-answer">A-answer</div>
+            <div className="B-answer">B-answer</div>
+            <div className="C-answer">C.ok</div>
+          </div>
+        </div>
+        <div className="footer">
+          <button className="btn btn-secondary">Prev</button>
+          <button className="btn btn-primary ">Next</button>
+        </div>
+      </div>
+      <div className="right-content">count down</div>
+    </div>
+  );
 };
 
 export default DetailQuiz;
