@@ -11,7 +11,18 @@ import "react-toastify/dist/ReactToastify.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas, faHome } from "@fortawesome/free-solid-svg-icons";
 import SignUp from "./component/Authentication/SignUp";
+import QuizList from "./component/User/QuizList";
+import DetailQuiz from "./component/User/DetailQuiz";
 library.add(fas, faHome);
+
+const NotFound = () => {
+  return (
+    <div className="container mt-3 alert alert-danger">
+      404 not found with your current quiz !
+    </div>
+  );
+};
+
 function Container() {
   return (
     <>
@@ -19,14 +30,16 @@ function Container() {
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />}></Route>
-            <Route path="user" element={<User />}></Route>
+            <Route path="user" element={<QuizList />}></Route>
           </Route>
+          <Route path="/quiz/:id" element={<DetailQuiz />}></Route>
           <Route path="admin" element={<Admin />}>
             <Route path="manage-user" element={<ManageUser />}></Route>
             <Route index element={<DashBoard />}></Route>
           </Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<SignUp />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
       <ToastContainer
