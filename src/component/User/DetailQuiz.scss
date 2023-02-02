@@ -3,14 +3,18 @@
   gap: 20px;
   padding: 50px;
   .left-content {
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
     width: 70%;
-    border: 1px solid red;
 
     .title {
       font-size: 24px;
       font-weight: 600;
     }
-
+    .q-content {
+      text-align: center;
+    }
     .footer {
       display: flex;
       gap: 15px;
@@ -20,6 +24,8 @@
   }
   .right-content {
     width: 30%;
-    border: 1px solid red;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
   }
 }

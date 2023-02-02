@@ -18,6 +18,32 @@ const DetailQuiz = () => {
   const handleNext = () => {
     if (dataQuiz && dataQuiz.length > indexQ + 1) setIndexQ(indexQ + 1);
   };
+
+  const handleCheckBox = (answerId, questionId) => {
+    console.log(answerId, questionId);
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+    let question = dataQuizClone.find(
+      (item) => +item.questionId === +questionId
+    );
+    console.log(question);
+    if (question && question.answers) {
+      let b = question.answers.map((item) => {
+        if (+item.id === +answerId) {
+          item.isSelected = !item.isSelected;
+        }
+        return item;
+      });
+      console.log(b);
+      question.answers = b;
+    }
+    let index = dataQuizClone.findIndex(
+      (item) => item.questionId === +questionId
+    );
+    if (index > -1) {
+      dataQuizClone[index] = question;
+      setDataQuiz(dataQuizClone);
+    }
+  };
   useEffect(() => {
     fetchQuiz();
   }, [quizId]);
@@ -40,6 +66,7 @@ const DetailQuiz = () => {
               questionDescription = item.questionDescription;
               image = item.image;
             }
+            item.answers.isSelected = false;
             answers.push(item.answers);
           });
           return { questionId: key, answers, questionDescription, image };
@@ -56,6 +83,7 @@ const DetailQuiz = () => {
 
         <div className="q-content">
           <Question
+            handleCheckBox={handleCheckBox}
             index={indexQ}
             data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[indexQ] : []}
           />
@@ -66,6 +94,9 @@ const DetailQuiz = () => {
           </button>
           <button className="btn btn-primary " onClick={handleNext}>
             Next
+          </button>
+          <button className="btn btn-warning " onClick={handleNext}>
+            Finish
           </button>
         </div>
       </div>
