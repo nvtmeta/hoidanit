@@ -1,13 +1,23 @@
 import { useParams, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getQuizData } from "../../services/apiService";
 import _ from "lodash";
 import "./DetailQuiz.scss";
+import Question from "./Question";
 const DetailQuiz = () => {
   const params = useParams();
   const location = useLocation();
-  console.log(location);
   const quizId = params.id;
+  const [dataQuiz, setDataQuiz] = useState([]);
+  const [indexQ, setIndexQ] = useState(0);
+  console.log(dataQuiz);
+  const handlePrev = () => {
+    if (dataQuiz && indexQ - 1 < 0) return;
+    setIndexQ(indexQ - 1);
+  };
+  const handleNext = () => {
+    if (dataQuiz && dataQuiz.length > indexQ + 1) setIndexQ(indexQ + 1);
+  };
   useEffect(() => {
     fetchQuiz();
   }, [quizId]);
@@ -35,6 +45,7 @@ const DetailQuiz = () => {
           return { questionId: key, answers, questionDescription, image };
         })
         .value();
+      setDataQuiz(data);
     }
   };
   return (
@@ -42,20 +53,20 @@ const DetailQuiz = () => {
       <div className="left-content">
         <div className="title"> Quiz 1: {location?.state?.quizTitle}</div>
         <hr />
-        <div className="q-body">
-          <img alt="" />
-        </div>
+
         <div className="q-content">
-          <div className="question">Q1: What the hell?</div>
-          <div className="answer">
-            <div className="A-answer">A-answer</div>
-            <div className="B-answer">B-answer</div>
-            <div className="C-answer">C.ok</div>
-          </div>
+          <Question
+            index={indexQ}
+            data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[indexQ] : []}
+          />
         </div>
         <div className="footer">
-          <button className="btn btn-secondary">Prev</button>
-          <button className="btn btn-primary ">Next</button>
+          <button className="btn btn-secondary" onClick={handlePrev}>
+            Prev
+          </button>
+          <button className="btn btn-primary " onClick={handleNext}>
+            Next
+          </button>
         </div>
       </div>
       <div className="right-content">count down</div>

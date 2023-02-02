@@ -4,7 +4,6 @@ import "./QuizList.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 const QuizList = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [arrQuiz, setArrQuiz] = useState([]);
   useEffect(() => {
     getQuizData();
