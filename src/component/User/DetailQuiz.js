@@ -18,38 +18,43 @@ const DetailQuiz = () => {
   const handleNext = () => {
     if (dataQuiz && dataQuiz.length > indexQ + 1) setIndexQ(indexQ + 1);
   };
-  // const handleFinish = () => {
-  //   // {
-  //   //     "quizId": 1,
-  //   //     "answers": [
-  //   //         {
-  //   //             "questionId": 1,
-  //   //             "userAnswerId": [3]
-  //   //         },
-  //   //         {
-  //   //             "questionId": 2,
-  //   //             "userAnswerId": [6]
-  //   //         }
-  //   //     ]
-  //   // }
-  //   let payload = {
-  //     quizId: +quizId,
-  //     answers: [],
-  //   };
-  //   let answers = [];
-  //   if (dataQuiz && dataQuiz.length > 0) {
-  //     dataQuiz.forEach((item) => {
-  //       let questionId = +item.questionId;
-  //       let userAnswerId = [];
-  //       answers.push({
-  //         questionId: +questionId,
-  //         userAnswerId,
-  //       });
-  //     });
-  //     payload.answers = answers;
-  //   }
-  //   console.log("finish", dataQuiz);
-  // };
+  const handleFinish = () => {
+    // {
+    //     "quizId": 1,
+    //     "answers": [
+    //         {
+    //             "questionId": 1,
+    //             "userAnswerId": [3]
+    //         },
+    //         {
+    //             "questionId": 2,
+    //             "userAnswerId": [6]
+    //         }
+    //     ]
+    // }
+    let payload = {
+      quizId: +quizId,
+      answers: [],
+    };
+    let answers = [];
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach((item) => {
+        let questionId = +item.questionId;
+        let userAnswerId = [];
+        item.answers.forEach((e) => {
+          if (e.isSelected) {
+            userAnswerId.push(e.id);
+          }
+        });
+        answers.push({
+          questionId: questionId,
+          userAnswerId,
+        });
+      });
+      payload.answers = answers;
+    }
+    console.log("finish", payload);
+  };
 
   const handleCheckBox = (answerId, questionId) => {
     let dataQuizClone = _.cloneDeep(dataQuiz);
@@ -127,7 +132,7 @@ const DetailQuiz = () => {
           <button className="btn btn-primary " onClick={handleNext}>
             Next
           </button>
-          <button className="btn btn-warning " onClick="">
+          <button className="btn btn-warning " onClick={handleFinish}>
             Finish
           </button>
         </div>
