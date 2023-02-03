@@ -1,9 +1,7 @@
 import _ from "lodash";
 import "./Question.scss";
 const Question = ({ data, index, handleCheckBox }) => {
-  console.log(data);
-  const controlCheckBox = (answersId, questionId) => {
-    console.log(answersId, questionId);
+  const controlCheckBox = (e, answersId, questionId) => {
     handleCheckBox(answersId, questionId);
   };
   if (_.isEmpty(data)) {
@@ -28,7 +26,6 @@ const Question = ({ data, index, handleCheckBox }) => {
           {data.answers &&
             data.answers.length > 0 &&
             data.answers.map((item, index) => {
-              console.log(item);
               return (
                 <div key={index}>
                   <div className="form-check">
@@ -36,9 +33,8 @@ const Question = ({ data, index, handleCheckBox }) => {
                       className="form-check-input"
                       type="checkbox"
                       checked={item.isSelected}
-                      onChange={() => {
-                        console.log(item.answers);
-                        controlCheckBox(item.id, data.questionId);
+                      onChange={(e) => {
+                        controlCheckBox(e, item.id, data.questionId);
                       }}
                     />
                     <label className="form-check-label">

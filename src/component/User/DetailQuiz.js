@@ -18,31 +18,63 @@ const DetailQuiz = () => {
   const handleNext = () => {
     if (dataQuiz && dataQuiz.length > indexQ + 1) setIndexQ(indexQ + 1);
   };
+  // const handleFinish = () => {
+  //   // {
+  //   //     "quizId": 1,
+  //   //     "answers": [
+  //   //         {
+  //   //             "questionId": 1,
+  //   //             "userAnswerId": [3]
+  //   //         },
+  //   //         {
+  //   //             "questionId": 2,
+  //   //             "userAnswerId": [6]
+  //   //         }
+  //   //     ]
+  //   // }
+  //   let payload = {
+  //     quizId: +quizId,
+  //     answers: [],
+  //   };
+  //   let answers = [];
+  //   if (dataQuiz && dataQuiz.length > 0) {
+  //     dataQuiz.forEach((item) => {
+  //       let questionId = +item.questionId;
+  //       let userAnswerId = [];
+  //       answers.push({
+  //         questionId: +questionId,
+  //         userAnswerId,
+  //       });
+  //     });
+  //     payload.answers = answers;
+  //   }
+  //   console.log("finish", dataQuiz);
+  // };
 
   const handleCheckBox = (answerId, questionId) => {
-    console.log(answerId, questionId);
     let dataQuizClone = _.cloneDeep(dataQuiz);
+    console.log(dataQuizClone);
     let question = dataQuizClone.find(
       (item) => +item.questionId === +questionId
     );
     console.log(question);
     if (question && question.answers) {
-      let b = question.answers.map((item) => {
+      // phai co dau + moi ok , bien string thanh number
+      question.answers = question.answers.map((item) => {
         if (+item.id === +answerId) {
           item.isSelected = !item.isSelected;
         }
         return item;
       });
-      console.log(b);
-      question.answers = b;
     }
     let index = dataQuizClone.findIndex(
-      (item) => item.questionId === +questionId
+      (item) => +item.questionId === +questionId
     );
     if (index > -1) {
       dataQuizClone[index] = question;
       setDataQuiz(dataQuizClone);
     }
+    console.log(dataQuizClone);
   };
   useEffect(() => {
     fetchQuiz();
@@ -95,7 +127,7 @@ const DetailQuiz = () => {
           <button className="btn btn-primary " onClick={handleNext}>
             Next
           </button>
-          <button className="btn btn-warning " onClick={handleNext}>
+          <button className="btn btn-warning " onClick="">
             Finish
           </button>
         </div>
