@@ -1,15 +1,18 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getQuizData } from "../../services/apiService";
+import { getQuizData, postSubmitQuiz } from "../../services/apiService";
 import _ from "lodash";
 import "./DetailQuiz.scss";
 import Question from "./Question";
+import ModalResult from "./ModalResult";
 const DetailQuiz = () => {
   const params = useParams();
   const location = useLocation();
   const quizId = params.id;
   const [dataQuiz, setDataQuiz] = useState([]);
   const [indexQ, setIndexQ] = useState(0);
+  const [showModalResult, setShowModalResult] = useState(false);
+  const [dataModalResult, setDataModalResult] = useState({});
   console.log(dataQuiz);
   const handlePrev = () => {
     if (dataQuiz && indexQ - 1 < 0) return;
@@ -18,7 +21,7 @@ const DetailQuiz = () => {
   const handleNext = () => {
     if (dataQuiz && dataQuiz.length > indexQ + 1) setIndexQ(indexQ + 1);
   };
-  const handleFinish = () => {
+  const handleFinish = async () => {
     // {
     //     "quizId": 1,
     //     "answers": [
@@ -53,7 +56,18 @@ const DetailQuiz = () => {
       });
       payload.answers = answers;
     }
-    console.log("finish", payload);
+    //submit answer api
+
+    let res = await postSubmitQuiz(payload);
+    console.log(res);
+    if (res && res.EC === 0) {
+      setDataModalResult({
+        countCorrect: res.DT.countCorrect,
+        countTotal: res.DT.countTotal,
+        quizData: res.DT.quizData,
+      });
+      setShowModalResult(true);
+    }
   };
 
   const handleCheckBox = (answerId, questionId) => {
@@ -138,6 +152,11 @@ const DetailQuiz = () => {
         </div>
       </div>
       <div className="right-content">count down</div>
+      <ModalResult
+        show={showModalResult}
+        setShow={setShowModalResult}
+        dataModalResult={dataModalResult}
+      />
     </div>
   );
 };
