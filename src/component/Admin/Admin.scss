@@ -1,3 +1,6 @@
+body {
+  overflow: hidden;
+}
 .admin-container {
   display: flex;
   .admin-sidebar {
@@ -13,7 +16,7 @@
       border: 1px solid red;
     }
     .admin-body {
-      height: 40px;
+      height: calc(100vh - 40px);
       border: 1px solid burlywood;
     }
   }

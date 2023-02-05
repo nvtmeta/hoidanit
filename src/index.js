@@ -7,6 +7,7 @@ import Container from "./Container";
 import { Provider } from "react-redux";
 import { store, persistor } from "../src/redux/store";
 import "nprogress/nprogress.css";
+import "react-perfect-scrollbar/dist/css/styles.css";
 import { PersistGate } from "redux-persist/integration/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
