@@ -13,6 +13,7 @@ import { fas, faHome } from "@fortawesome/free-solid-svg-icons";
 import SignUp from "./component/Authentication/SignUp";
 import QuizList from "./component/User/QuizList";
 import DetailQuiz from "./component/User/DetailQuiz";
+import ManageQuiz from "./component/Admin/content/Quiz/ManageQuiz";
 library.add(fas, faHome);
 
 const NotFound = () => {
@@ -35,6 +36,7 @@ function Container() {
           <Route path="/quiz/:id" element={<DetailQuiz />}></Route>
           <Route path="admin" element={<Admin />}>
             <Route path="manage-user" element={<ManageUser />}></Route>
+            <Route path="manage-quiz" element={<ManageQuiz />}></Route>
             <Route index element={<DashBoard />}></Route>
           </Route>
           <Route path="login" element={<Login />}></Route>
