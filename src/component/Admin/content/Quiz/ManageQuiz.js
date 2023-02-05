@@ -1,18 +1,39 @@
 import "./ManageQuiz.scss";
 import Select from "react-select";
 import { useState } from "react";
+import { postCreateNewQuiz } from "../../../../services/apiService";
+import { toast } from "react-toastify";
 const ManageQuiz = () => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [type, setType] = useState("Easy");
+  const [type, setType] = useState("");
   const [image, setImage] = useState(null);
   const options = [
-    { value: "Easy", label: "Chocolate" },
-    { value: "Medium", label: "Strawberry" },
-    { value: "Difficult", label: "Vanilla" },
+    { value: "Easy", label: "Easy" },
+    { value: "Medium", label: "Medium" },
+    { value: "Difficult", label: "Difficult" },
   ];
 
-  const handleChangeFile = () => {};
+  const handleChangeFile = (e) => {
+    if (e.target && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+  const handleSubmit = async () => {
+    if (!name || !desc) {
+      toast.error("Name/Description is required");
+    }
+    let res = await postCreateNewQuiz(desc, name, type?.value, image);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      setName("");
+      setDesc("");
+      setImage("");
+    } else {
+      toast.error(res.EM);
+    }
+  };
+
   return (
     <div className="quiz-container">
       <div className="title">Manage quiz</div>
@@ -33,7 +54,7 @@ const ManageQuiz = () => {
         </div>
         <div class="form-floating">
           <input
-            type="password"
+            type="text"
             class="form-control"
             placeholder="Your quiz description"
             value={desc}
@@ -43,8 +64,8 @@ const ManageQuiz = () => {
         </div>
         <div className="my-3">
           <Select
-            // value={}
-            // onChange={this.handleChange}
+            value={type}
+            onChange={setType}
             options={options}
             placeholder={"Quiz type"}
           />
@@ -56,6 +77,14 @@ const ManageQuiz = () => {
             className="form-control"
             onChange={(e) => handleChangeFile(e)}
           />
+          <button
+            className="btn btn-primary mt-3"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Save
+          </button>
         </div>
       </fieldset>
 
