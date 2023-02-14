@@ -1,0 +1,56 @@
+.question-container {
+  padding: 20px;
+
+  .title {
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+  .question-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  .description {
+    width: 40%;
+  }
+  .upload-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    .label-upload {
+      border: 1px solid red;
+      border-radius: 5px;
+      padding: 5px;
+    }
+  }
+  .btn {
+    display: flex;
+    gap: 10px;
+    .btnPlus {
+      font-size: 1.6rem;
+      color: yellowgreen;
+      cursor: pointer;
+    }
+    .btnRemove {
+      font-size: 1.6rem;
+      color: red;
+      cursor: pointer;
+    }
+    &:hover {
+      border: none;
+      cursor: default;
+    }
+  }
+  .answer-content {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    .isCorrect {
+      font-size: 1.4rem !important;
+    }
+    .answer {
+      width: 50%;
+    }
+  }
+}

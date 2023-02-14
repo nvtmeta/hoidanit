@@ -15,6 +15,7 @@ import SignUp from "./component/Authentication/SignUp";
 import QuizList from "./component/User/QuizList";
 import DetailQuiz from "./component/User/DetailQuiz";
 import ManageQuiz from "./component/Admin/content/Quiz/ManageQuiz";
+import Questions from "./component/Admin/content/Question/Questions";
 library.add(fas, faHome);
 
 const NotFound = () => {
@@ -39,6 +40,7 @@ function Container() {
             <Route path="manage-user" element={<ManageUser />}></Route>
             <Route path="manage-quiz" element={<ManageQuiz />}></Route>
             <Route index element={<DashBoard />}></Route>
+            <Route path="manage-questions" element={<Questions />}></Route>
           </Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<SignUp />}></Route>

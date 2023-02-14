@@ -8,7 +8,6 @@ const TableQuiz = () => {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
   const setDeleteQuiz = (item) => {
-    console.log(item);
     setDataUpdate(item);
     setShowModalDelete(true);
   };
@@ -21,7 +20,6 @@ const TableQuiz = () => {
   }, []);
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
-    console.log(res);
     if (res && res.EC === 0) {
       setListQuiz(res.DT);
     }

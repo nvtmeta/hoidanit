@@ -100,7 +100,7 @@ export default function ModalUpdateQuiz({
                 value={difficult}
               >
                 <option value={"EASY"}>EASY</option>
-                <option value={"MEDIUM"}>MEDIUM</option>
+                <option value={"Medium"}>MEDIUM</option>
                 <option value={"HARD"}>HARD</option>
               </select>
             </div>
