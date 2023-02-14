@@ -8,6 +8,7 @@ import Login from "./component/Authentication/Login";
 import App from "./App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas, faHome } from "@fortawesome/free-solid-svg-icons";
 import SignUp from "./component/Authentication/SignUp";
