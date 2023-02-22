@@ -5,12 +5,18 @@ import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import { RiImageAddFill } from 'react-icons/ri';
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
+import Lightbox from 'react-awesome-lightbox';
 const Questions = () => {
   const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ];
+  const [isPreviewImg, setIsPreviewImg] = useState(false);
+  const [dataImgPrev, setDataImgPrev] = useState({
+    title: '',
+    url: '',
+  });
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
   const [questions, setQuestions] = useState([
@@ -108,6 +114,19 @@ const Questions = () => {
   const handleSubmit = () => {
     console.log(questions);
   };
+
+  const handlePrevImg = (id) => {
+    let queClone = _.cloneDeep(questions);
+    let index = queClone.findIndex((item) => item.id === id);
+    console.log(questions, index);
+    if (index > -1) {
+      setDataImgPrev({
+        url: URL.createObjectURL(queClone[index].imageFile),
+        title: queClone[index].imageName,
+      });
+      setIsPreviewImg(true);
+    }
+  };
   return (
     <div className="question-container">
       <div className="title">Manage questions</div>
@@ -143,12 +162,10 @@ const Questions = () => {
                   <label> Description {index + 1}</label>
                 </div>
                 <div className="upload-container">
-                  <label>
+                  <label htmlFor={`${question.id}`}>
                     <RiImageAddFill className="label-img-icon" />
                   </label>
-                  <label className="label-upload" htmlFor={`${question.id}`}>
-                    Upload image
-                  </label>
+
                   <input
                     id={`${question.id}`}
                     type={'file'}
@@ -156,9 +173,16 @@ const Questions = () => {
                     onChange={(e) => handleOnChangeFile(question.id, e)}
                   />
                   <span>
-                    {question.imageName
-                      ? question.imageName
-                      : ' 0 files is uploaded'}
+                    {question.imageName ? (
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handlePrevImg(question.id)}
+                      >
+                        {question.imageName}
+                      </span>
+                    ) : (
+                      ' 0 files is uploaded'
+                    )}
                   </span>
                 </div>
                 <div className="btn">
@@ -178,6 +202,7 @@ const Questions = () => {
                   )}
                 </div>
               </div>
+
               {question.answers &&
                 question.answers.length > 0 &&
                 question.answers.map((answer, index) => {
@@ -237,6 +262,7 @@ const Questions = () => {
             </div>
           );
         })}
+
       {questions && questions.length > 0 && (
         <div>
           <button className="btn btn-warning" onClick={handleSubmit}>
@@ -245,59 +271,14 @@ const Questions = () => {
         </div>
       )}
 
-      {/* <div className="question-main">
-        <div className="question-content mt-3 ">
-          <div className="form-floating description ">
-            <input type="text" className="form-control" placeholder="sca" />
-            <label>Description</label>
-          </div>
-          <div className="upload-container">
-            <label>
-              <RiImageAddFill className="label-img-icon" />
-            </label>
-            <label className="label-upload">Upload image</label>
-            <span>0 files is uploaded</span>
-          </div>
-          <div className="btn">
-            <span className="btnPlus">
-              <AiOutlinePlusCircle />
-            </span>
-            <span className="btnRemove">
-              <AiOutlineMinusCircle />
-            </span>
-          </div>
-        </div>
-        <div className="answer-content">
-          <input className=" isCorrect" type="checkbox"></input>
-          <div className="form-floating answer ">
-            <input type="text" className="form-control" placeholder="" />
-            <label>Answer 1</label>
-          </div>
-          <div className="btn">
-            <span className="btnPlus">
-              <AiOutlinePlusCircle />
-            </span>
-            <span className="btnRemove">
-              <AiOutlineMinusCircle />
-            </span>
-          </div>
-        </div>
-        <div className="answer-content">
-          <input className=" isCorrect" type="checkbox"></input>
-          <div className="form-floating answer ">
-            <input type="text" className="form-control" placeholder="" />
-            <label>Answer 1</label>
-          </div>
-          <div className="btn">
-            <span className="btnPlus">
-              <AiOutlinePlusCircle />
-            </span>
-            <span className="btnRemove">
-              <AiOutlineMinusCircle />
-            </span>
-          </div>
-        </div>
-      </div> */}
+      {/* imgPrev */}
+      {isPreviewImg && (
+        <Lightbox
+          image={dataImgPrev.url}
+          title={dataImgPrev.title}
+          onClose={() => setIsPreviewImg(false)}
+        />
+      )}
     </div>
   );
 };
