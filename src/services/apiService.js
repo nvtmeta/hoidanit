@@ -1,29 +1,29 @@
-import axios from "../utils/axiosCustomise";
-import FormData from "form-data";
+import axios from '../utils/axiosCustomise';
+import FormData from 'form-data';
 const postCreateUser = (email, password, name, role, image) => {
   const data = new FormData();
-  data.append("email", email);
-  data.append("password", password);
-  data.append("username", name);
-  data.append("role", role);
-  data.append("userImage", image);
-  return axios.post("api/v1/participant", data);
+  data.append('email', email);
+  data.append('password', password);
+  data.append('username', name);
+  data.append('role', role);
+  data.append('userImage', image);
+  return axios.post('api/v1/participant', data);
 };
 
 const postUpdateUser = (id, name, role, image) => {
   const data = new FormData();
-  data.append("username", name);
-  data.append("id", id);
-  data.append("role", role);
-  data.append("userImage", image);
-  return axios.put("api/v1/participant", data);
+  data.append('username', name);
+  data.append('id', id);
+  data.append('role', role);
+  data.append('userImage', image);
+  return axios.put('api/v1/participant', data);
 };
 
 const getAllUsers = () => {
-  return axios.get("api/v1/participant/all");
+  return axios.get('api/v1/participant/all');
 };
 const deleteUser = (userId) => {
-  return axios.delete("api/v1/participant", { data: { id: userId } });
+  return axios.delete('api/v1/participant', { data: { id: userId } });
 };
 const getUserPaginate = (page, limit) => {
   return axios.get(`api/v1/participant?page=${page}&limit=${limit}`);
@@ -37,14 +37,14 @@ const postLogin = (em, pass) => {
 };
 
 const postSignUp = (email, password, userName) => {
-  return axios.post("api/v1/register", {
+  return axios.post('api/v1/register', {
     email,
     password,
     userName,
   });
 };
 const getQuizByUser = () => {
-  return axios.get("api/v1/quiz-by-participant");
+  return axios.get('api/v1/quiz-by-participant');
 };
 const getQuizData = (id) => {
   return axios.get(`api/v1/questions-by-quiz?quizId=${id}`);
@@ -54,15 +54,15 @@ const postSubmitQuiz = (data) => {
 };
 const postCreateNewQuiz = (description, name, difficulty, quizImage) => {
   const data = new FormData();
-  data.append("description", description);
-  data.append("name", name);
-  data.append("difficulty", difficulty);
-  data.append("quizImage", quizImage);
-  return axios.post("api/v1/quiz", data);
+  data.append('description', description);
+  data.append('name', name);
+  data.append('difficulty', difficulty);
+  data.append('quizImage', quizImage);
+  return axios.post('api/v1/quiz', data);
 };
 
 const getAllQuizForAdmin = () => {
-  return axios.get("api/v1/quiz/all");
+  return axios.get('api/v1/quiz/all');
 };
 const deleteQuiz = (userId) => {
   return axios.delete(`api/v1/quiz/${userId}`);
@@ -70,13 +70,29 @@ const deleteQuiz = (userId) => {
 
 const updateQuiz = (id, description, name, difficulty, quizImage) => {
   const data = new FormData();
-  data.append("id", id);
-  data.append("description", description);
-  data.append("name", name);
-  data.append("difficulty", difficulty);
-  data.append("quizImage", quizImage);
-  return axios.put("api/v1/quiz", data);
+  data.append('id', id);
+  data.append('description', description);
+  data.append('name', name);
+  data.append('difficulty', difficulty);
+  data.append('quizImage', quizImage);
+  return axios.put('api/v1/quiz', data);
 };
+
+const postNewQue = (quiz_id, description, quizImage) => {
+  const data = new FormData();
+  data.append('quiz_id', quiz_id);
+  data.append('description', description);
+  data.append('quizImage', quizImage);
+  return axios.post('api/v1/question', data);
+};
+const postNewAnswer = (description, correct_answer, question_id) => {
+  return axios.post('api/v1/answer', {
+    description,
+    correct_answer,
+    question_id,
+  });
+};
+
 export {
   postCreateUser,
   getAllUsers,
@@ -92,4 +108,6 @@ export {
   getAllQuizForAdmin,
   deleteQuiz,
   updateQuiz,
+  postNewQue,
+  postNewAnswer,
 };
