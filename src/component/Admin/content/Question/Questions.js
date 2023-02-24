@@ -6,6 +6,7 @@ import { RiImageAddFill } from 'react-icons/ri';
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
 import Lightbox from 'react-awesome-lightbox';
+import { toast } from 'react-toastify';
 import {
   getAllQuizForAdmin,
   postCreateNewQuiz,
@@ -13,12 +14,18 @@ import {
   postNewQue,
 } from '../../../../services/apiService';
 const Questions = () => {
-  // const options = [
-  //   { value: 'chocolate', label: 'Chocolate' },
-  //   { value: 'strawberry', label: 'Strawberry' },
-  //   { value: 'vanilla', label: 'Vanilla' },
-  // ];
-
+  const initQue = [
+    {
+      id: uuidv4(),
+      description: '',
+      imageFile: '',
+      imageName: '',
+      answers: [
+        { id: uuidv4(), description: '', isCorrect: false },
+        { id: uuidv4(), description: '', isCorrect: false },
+      ],
+    },
+  ];
   const [listQuiz, setListQuiz] = useState([]);
   useEffect(() => {
     fetchQuiz();
@@ -44,18 +51,7 @@ const Questions = () => {
   });
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
-  const [questions, setQuestions] = useState([
-    {
-      id: uuidv4(),
-      description: '',
-      imageFile: '',
-      imageName: '',
-      answers: [
-        { id: uuidv4(), description: '', isCorrect: false },
-        { id: uuidv4(), description: '', isCorrect: false },
-      ],
-    },
-  ]);
+  const [questions, setQuestions] = useState(initQue);
   //add and remove question
   const handleAddRevQue = (type, id) => {
     if (type === 'ADD') {
@@ -137,27 +133,62 @@ const Questions = () => {
     setQuestions(queClone);
   };
   const handleSubmit = async () => {
-    let res = await Promise.all(
-      questions.map(async (question) => {
-        const que = await postNewQue(
-          +selectedQuiz.value,
-          question.description,
-          question.imageFile
-        );
-        await Promise.all(
-          question.answers.map(
-            async (answer) =>
-              await postNewAnswer(
-                answer.description,
-                answer.isCorrect,
-                que.DT.id
-              )
-          )
-        );
-        return que;
-      })
-    );
-    console.log(res);
+    if (_.isEmpty(selectedQuiz)) {
+      toast.error('please choose a quiz');
+      return;
+    }
+
+    // validate answer
+
+    let isValidAns = true;
+    let indexQue = 0,
+      indexAns = 0;
+    for (let i = 0; i < questions.length; i++) {
+      for (let j = 0; j < questions[i].answers.length; j++) {
+        if (!questions[i].answers[j].description) {
+          isValidAns = false;
+          indexAns = j;
+          break;
+        }
+      }
+      indexQue = i;
+      if (isValidAns === false) break;
+    }
+    if (isValidAns === false) {
+      toast.error(
+        `Not empty answer ${indexAns + 1} at Question ${indexQue + 1}`
+      );
+    }
+    //validate questions
+
+    let isValidQue = true;
+    let indexQ = 0;
+    for (let i = 0; i < questions.length; i++) {
+      if (!questions[i].description) {
+        isValidQue = false;
+        indexQ = i;
+        break;
+      }
+    }
+
+    if (isValidQue === false) {
+      toast.error(`Not empty description for question  ${indexQ + 1}`);
+      return;
+    }
+
+    //api post new question and answer
+    for (const question of questions) {
+      const q = await postNewQue(
+        +selectedQuiz.value,
+        question.description,
+        question.imageFile
+      );
+      for (const answer of question.answers) {
+        await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+      }
+    }
+    toast.success('Create question and answer success !');
+    setQuestions(initQue);
   };
 
   const handlePrevImg = (id) => {
