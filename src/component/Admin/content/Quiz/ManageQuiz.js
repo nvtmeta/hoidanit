@@ -1,19 +1,21 @@
-import "./ManageQuiz.scss";
-import Select from "react-select";
-import { useState } from "react";
-import { postCreateNewQuiz } from "../../../../services/apiService";
-import { toast } from "react-toastify";
-import Accordion from "react-bootstrap/Accordion";
-import TableQuiz from "./TableQuiz";
+import './ManageQuiz.scss';
+import Select from 'react-select';
+import { useState } from 'react';
+import { postCreateNewQuiz } from '../../../../services/apiService';
+import { toast } from 'react-toastify';
+import Accordion from 'react-bootstrap/Accordion';
+import TableQuiz from './TableQuiz';
+import QuizQA from './QuizQA';
+import AssignQuiz from './AssignQuiz';
 const ManageQuiz = () => {
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
-  const [type, setType] = useState("");
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
+  const [type, setType] = useState('');
   const [image, setImage] = useState(null);
   const options = [
-    { value: "EASY", label: "Easy" },
-    { value: "MEDIUM", label: "Medium" },
-    { value: "DIFFICULT", label: "Difficult" },
+    { value: 'EASY', label: 'Easy' },
+    { value: 'MEDIUM', label: 'Medium' },
+    { value: 'DIFFICULT', label: 'Difficult' },
   ];
 
   const handleChangeFile = (e) => {
@@ -23,14 +25,14 @@ const ManageQuiz = () => {
   };
   const handleSubmit = async () => {
     if (!name || !desc) {
-      toast.error("Name/Description is required");
+      toast.error('Name/Description is required');
     }
     let res = await postCreateNewQuiz(desc, name, type?.value, image);
     if (res && res.EC === 0) {
       toast.success(res.EM);
-      setName("");
-      setDesc("");
-      setImage("");
+      setName('');
+      setDesc('');
+      setImage('');
     } else {
       toast.error(res.EM);
     }
@@ -69,7 +71,7 @@ const ManageQuiz = () => {
                   value={type}
                   onChange={setType}
                   options={options}
-                  placeholder={"Quiz type"}
+                  placeholder={'Quiz type'}
                 />
               </div>
               <div className="more-actions ">
@@ -89,13 +91,25 @@ const ManageQuiz = () => {
                 </button>
               </div>
             </fieldset>
+            <div className="list-detail">
+              <TableQuiz />
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
+
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>Update Q/A Quizzes</Accordion.Header>
+          <Accordion.Body>
+            <QuizQA />
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="3">
+          <Accordion.Header>Assign to Users</Accordion.Header>
+          <Accordion.Body>
+            <AssignQuiz />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-
-      <div className="list-detail">
-        <TableQuiz />
-      </div>
     </div>
   );
 };
