@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { getQuizByUser } from "../../services/apiService";
-import "./QuizList.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { getQuizByUser } from '../../services/apiService';
+import './QuizList.scss';
+import { useLocation, useNavigate } from 'react-router-dom';
 const QuizList = () => {
   const navigate = useNavigate();
   const [arrQuiz, setArrQuiz] = useState([]);
@@ -20,7 +20,7 @@ const QuizList = () => {
         arrQuiz.length > 0 &&
         arrQuiz.map((quiz, index) => {
           return (
-            <div key={index} className="card" style={{ width: "18rem" }}>
+            <div key={index} className="card" style={{ width: '18rem' }}>
               <img
                 className="card-img-top"
                 src={`data:image/jpeg;base64,${quiz.image}`}

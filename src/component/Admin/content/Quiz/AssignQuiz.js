@@ -1,8 +1,12 @@
 import React from 'react';
 import Select from 'react-select';
 import { useState, useEffect } from 'react';
-import { getAllQuizForAdmin } from '../../../../services/apiService';
+import {
+  getAllQuizForAdmin,
+  postAssignQUiz,
+} from '../../../../services/apiService';
 import { getAllUsers } from '../../../../services/apiService';
+import { toast } from 'react-toastify';
 const AssignQuiz = () => {
   const [listQuiz, setListQuiz] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
@@ -37,6 +41,15 @@ const AssignQuiz = () => {
       setListUser(users);
     }
   };
+
+  const handleAssign = async () => {
+    const res = await postAssignQUiz(selectedQuiz.value, selectedUser.value);
+    if (res.EC === 0 && res) {
+      toast.success(res.EM);
+    } else {
+      toast.error(res.EM);
+    }
+  };
   return (
     <div className="add-new-question row">
       <div className="col-6 form-group">
@@ -60,7 +73,9 @@ const AssignQuiz = () => {
         </div>
       </div>
       <div>
-        <button className="btn btn-warning mt-4">Assign</button>
+        <button className="btn btn-warning mt-4" onClick={() => handleAssign()}>
+          Assign
+        </button>
       </div>
     </div>
   );

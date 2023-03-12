@@ -12,6 +12,7 @@ import {
   postCreateNewQuiz,
   postNewAnswer,
   postNewQue,
+  getQuizWithQA,
 } from '../../../../services/apiService';
 const QuizQA = () => {
   const initQue = [
@@ -30,6 +31,7 @@ const QuizQA = () => {
   useEffect(() => {
     fetchQuiz();
   }, []);
+
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
     if (res && res.EC === 0) {
@@ -50,8 +52,48 @@ const QuizQA = () => {
     url: '',
   });
   const [selectedQuiz, setSelectedQuiz] = useState(null);
-
   const [questions, setQuestions] = useState(initQue);
+
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQUizQA();
+    }
+  }, [selectedQuiz]);
+
+  const fetchQUizQA = async () => {
+    const res = await getQuizWithQA(selectedQuiz.value);
+    console.log(res);
+    //return a promise that resolves with a File instance
+    function urltoFile(url, filename, mimeType) {
+      return fetch(url)
+        .then(function (res) {
+          return res.arrayBuffer();
+        })
+        .then(function (buf) {
+          return new File([buf], filename, { type: mimeType });
+        });
+    }
+    if (res && res.EC === 0) {
+      // convert base64 to file obj
+      let newQA = [];
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        let q = res.DT.qa[i];
+        if (q.imageFile) {
+          q.imageName = `Question-${q.id}.png`;
+          q.imageFile = await urltoFile(
+            `data:image/png;base64,${q.imageFile}`,
+            `Question-${q.id}.png`,
+            'image/png'
+          );
+        }
+        newQA.push(q);
+      }
+
+      setQuestions(newQA);
+      console.log(newQA);
+    }
+  };
+
   //add and remove question
   const handleAddRevQue = (type, id) => {
     if (type === 'ADD') {

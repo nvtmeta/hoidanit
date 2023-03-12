@@ -1,10 +1,10 @@
-import { useParams, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getQuizData, postSubmitQuiz } from "../../services/apiService";
-import _ from "lodash";
-import "./DetailQuiz.scss";
-import Question from "./Question";
-import ModalResult from "./ModalResult";
+import { useParams, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getQuizData, postSubmitQuiz } from '../../services/apiService';
+import _ from 'lodash';
+import './DetailQuiz.scss';
+import Question from './Question';
+import ModalResult from './ModalResult';
 const DetailQuiz = () => {
   const params = useParams();
   const location = useLocation();
@@ -13,7 +13,6 @@ const DetailQuiz = () => {
   const [indexQ, setIndexQ] = useState(0);
   const [showModalResult, setShowModalResult] = useState(false);
   const [dataModalResult, setDataModalResult] = useState({});
-  console.log(dataQuiz);
   const handlePrev = () => {
     if (dataQuiz && indexQ - 1 < 0) return;
     setIndexQ(indexQ - 1);
@@ -72,11 +71,9 @@ const DetailQuiz = () => {
 
   const handleCheckBox = (answerId, questionId) => {
     let dataQuizClone = _.cloneDeep(dataQuiz);
-    console.log(dataQuizClone);
     let question = dataQuizClone.find(
       (item) => +item.questionId === +questionId
     );
-    console.log(question);
     if (question && question.answers) {
       // phai co dau + moi ok , bien string thanh number
       question.answers = question.answers.map((item) => {
@@ -93,7 +90,6 @@ const DetailQuiz = () => {
       dataQuizClone[index] = question;
       setDataQuiz(dataQuizClone);
     }
-    console.log(dataQuizClone);
   };
   useEffect(() => {
     fetchQuiz();
@@ -106,7 +102,7 @@ const DetailQuiz = () => {
       let data = _.chain(raw)
 
         // Group the elements of Array based on `color` property
-        .groupBy("id")
+        .groupBy('id')
         // `key` is group's name (color), `value` is the array of objects
         .map((value, key) => {
           let answers = [];

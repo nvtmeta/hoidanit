@@ -1,6 +1,7 @@
-import _ from "lodash";
-import "./Question.scss";
+import _ from 'lodash';
+import './Question.scss';
 const Question = ({ data, index, handleCheckBox }) => {
+  console.log(data);
   const controlCheckBox = (e, answersId, questionId) => {
     handleCheckBox(answersId, questionId);
   };
