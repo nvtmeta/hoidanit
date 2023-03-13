@@ -13,6 +13,7 @@ import {
   postNewAnswer,
   postNewQue,
   getQuizWithQA,
+  postUpsertQA,
 } from '../../../../services/apiService';
 const QuizQA = () => {
   const initQue = [
@@ -30,6 +31,7 @@ const QuizQA = () => {
   const [listQuiz, setListQuiz] = useState([]);
   useEffect(() => {
     fetchQuiz();
+    fetchQUizQA();
   }, []);
 
   const fetchQuiz = async () => {
@@ -44,7 +46,6 @@ const QuizQA = () => {
       setListQuiz(newQuiz);
     }
   };
-  console.log(listQuiz);
 
   const [isPreviewImg, setIsPreviewImg] = useState(false);
   const [dataImgPrev, setDataImgPrev] = useState({
@@ -62,7 +63,6 @@ const QuizQA = () => {
 
   const fetchQUizQA = async () => {
     const res = await getQuizWithQA(selectedQuiz.value);
-    console.log(res);
     //return a promise that resolves with a File instance
     function urltoFile(url, filename, mimeType) {
       return fetch(url)
@@ -90,7 +90,6 @@ const QuizQA = () => {
       }
 
       setQuestions(newQA);
-      console.log(newQA);
     }
   };
 
@@ -109,7 +108,6 @@ const QuizQA = () => {
     if (type === 'REV') {
       let queClone = _.cloneDeep(questions);
       queClone = queClone.filter((item) => item.id !== id);
-      console.log(queClone);
       setQuestions(queClone);
     }
   };
@@ -218,25 +216,44 @@ const QuizQA = () => {
       return;
     }
 
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
     //api post new question and answer
-    for (const question of questions) {
-      const q = await postNewQue(
-        +selectedQuiz.value,
-        question.description,
-        question.imageFile
-      );
-      for (const answer of question.answers) {
-        await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+    // for (const question of questions) {
+    //   const q = await postNewQue(
+    //     +selectedQuiz.value,
+    //     question.description,
+    //     question.imageFile
+    //   );
+    //   for (const answer of question.answers) {
+    //     await postNewAnswer(answer.description, answer.isCorrect, q.DT.id);
+    //   }
+    // }
+    let questionClone = _.cloneDeep(questions);
+    console.log(questionClone);
+    for (let i = 0; i < questionClone.length; i++) {
+      if (questionClone[i].imageFile) {
+        questionClone[i].imageFile = await toBase64(questionClone[i].imageFile);
       }
     }
-    toast.success('Create question and answer success !');
-    setQuestions(initQue);
+    const res = await postUpsertQA({
+      quizId: selectedQuiz.value,
+      questions: questionClone,
+    });
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      fetchQUizQA();
+    }
   };
 
   const handlePrevImg = (id) => {
     let queClone = _.cloneDeep(questions);
     let index = queClone.findIndex((item) => item.id === id);
-    console.log(questions, index);
     if (index > -1) {
       setDataImgPrev({
         url: URL.createObjectURL(queClone[index].imageFile),
