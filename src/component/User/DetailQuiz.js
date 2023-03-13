@@ -5,6 +5,7 @@ import _ from 'lodash';
 import './DetailQuiz.scss';
 import Question from './Question';
 import ModalResult from './ModalResult';
+import RightContent from './Content/RightContent';
 const DetailQuiz = () => {
   const params = useParams();
   const location = useLocation();
@@ -13,6 +14,7 @@ const DetailQuiz = () => {
   const [indexQ, setIndexQ] = useState(0);
   const [showModalResult, setShowModalResult] = useState(false);
   const [dataModalResult, setDataModalResult] = useState({});
+  console.log(dataQuiz);
   const handlePrev = () => {
     if (dataQuiz && indexQ - 1 < 0) return;
     setIndexQ(indexQ - 1);
@@ -58,7 +60,6 @@ const DetailQuiz = () => {
     //submit answer api
 
     let res = await postSubmitQuiz(payload);
-    console.log(res);
     if (res && res.EC === 0) {
       setDataModalResult({
         countCorrect: res.DT.countCorrect,
@@ -147,7 +148,9 @@ const DetailQuiz = () => {
           </button>
         </div>
       </div>
-      <div className="right-content">count down</div>
+      <div className="right-content">
+        <RightContent dataQuiz={dataQuiz} />
+      </div>
       <ModalResult
         show={showModalResult}
         setShow={setShowModalResult}

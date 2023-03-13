@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import './Question.scss';
+import Lightbox from 'react-awesome-lightbox';
+import { useState } from 'react';
 const Question = ({ data, index, handleCheckBox }) => {
+  const [isPreviewImg, setIsPreviewImg] = useState(false);
   console.log(data);
   const controlCheckBox = (e, answersId, questionId) => {
     handleCheckBox(answersId, questionId);
@@ -8,16 +11,29 @@ const Question = ({ data, index, handleCheckBox }) => {
   if (_.isEmpty(data)) {
     return;
   }
+
   return (
     <>
       <div className="q-container">
         <div className="q-image-body">
           {data.image && (
-            <img
-              className="q-image"
-              alt="card"
-              src={`data:image/jpeg;base64,${data.image}`}
-            />
+            <div>
+              <img
+                style={{ cursor: 'pointer' }}
+                className="q-image"
+                alt="card"
+                src={`data:image/jpeg;base64,${data.image}`}
+                onClick={() => setIsPreviewImg(true)}
+              />
+              {/* imgPrev */}
+              {isPreviewImg && (
+                <Lightbox
+                  image={`data:image/jpeg;base64,${data.image}`}
+                  title="question-image"
+                  onClose={() => setIsPreviewImg(false)}
+                />
+              )}
+            </div>
           )}
         </div>
         <div className="question">

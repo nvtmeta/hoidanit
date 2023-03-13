@@ -26,6 +26,34 @@
     width: 30%;
     padding: 20px;
     border-radius: 10px;
-    border: 2px solid #ccc;
+    border: 1px solid #000;
+    .main-timer {
+      text-align: center;
+      padding-bottom: 35px;
+      border-bottom: 1px solid #000;
+      font-weight: 600;
+      font-size: 20px;
+      padding-top: 10px;
+    }
+    .main-question {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 15px;
+      .question {
+        border: 1px solid #ccc;
+        border-radius: 999px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &:hover {
+          color: red;
+        }
+      }
+    }
   }
 }
