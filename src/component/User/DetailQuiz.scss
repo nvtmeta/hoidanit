@@ -49,9 +49,16 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        background-color: #fff;
 
         &:hover {
+          color: #838080;
+        }
+        &.selected {
           color: red;
+        }
+        &.clicked {
+          background-color: #ccc;
         }
       }
     }
