@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { ActionLogin } from '../../redux/LoginAction/actionLogin';
 import { ImSpinner6 } from 'react-icons/im';
+import Languages from './../Header/Languages';
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function Login() {
           >
             Sign up
           </button>
+          <Languages />
         </div>
 
         <div className="title col-4 mx-auto">Amazon</div>

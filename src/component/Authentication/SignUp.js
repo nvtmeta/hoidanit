@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { toast } from "react-toastify";
-import "./signup.scss";
-import { postSignUp } from "../../services/apiService";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
+import './signup.scss';
+import { postSignUp } from '../../services/apiService';
+import Languages from '../Header/Languages';
 function SignUp() {
   const [isVisible, setVisible] = useState(false);
 
@@ -11,9 +12,9 @@ function SignUp() {
     setVisible(!isVisible);
   };
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userName, setUsername] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [userName, setUsername] = useState('');
   const handleLogin = async () => {
     //validate
     const validateEmail = (email) => {
@@ -25,18 +26,18 @@ function SignUp() {
     };
     const isValidEmail = validateEmail(email);
     if (!isValidEmail) {
-      toast.error("Invalid email");
+      toast.error('Invalid email');
       return;
     }
     if (!password) {
-      toast.error("Invalid password");
+      toast.error('Invalid password');
       return;
     }
     //submit API
     let res = await postSignUp(email, password, userName);
     if (res && res.EC === 0) {
       toast.success(res.EM);
-      navigate("/login");
+      navigate('/login');
       // await fetchUser();
     }
     if (res && res.EC !== 0) {
@@ -50,10 +51,11 @@ function SignUp() {
           <span>Already have an account ?</span>
           <button
             className="btn-login-header"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate('/login')}
           >
             Login
           </button>
+          <Languages />
         </div>
 
         <div className="title col-4 mx-auto">Amazon</div>
@@ -71,12 +73,12 @@ function SignUp() {
               value={email}
             ></input>
             <div className="password-form">
-              {" "}
-              <label className="email-password">Password (*)</label>{" "}
+              {' '}
+              <label className="email-password">Password (*)</label>{' '}
               <input
                 required
                 className="input-form"
-                type={!isVisible ? "password" : "text"}
+                type={!isVisible ? 'password' : 'text'}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -84,7 +86,7 @@ function SignUp() {
               ></input>
               <span>
                 <FontAwesomeIcon
-                  icon={isVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
+                  icon={isVisible ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}
                   className="icon-eye"
                   onClick={toggle}
                 />
@@ -102,14 +104,14 @@ function SignUp() {
           </div>
           <div className=" footer-login col-4 mx-auto ">
             <div>
-              {" "}
+              {' '}
               <button className="btn-login" onClick={handleLogin}>
                 Create your Amazon's account
               </button>
             </div>
             <div
               className="btn-returnHome text-center"
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
             >
               <FontAwesomeIcon icon="fas fa-home" className="icon-home " />
               Go to Homepage

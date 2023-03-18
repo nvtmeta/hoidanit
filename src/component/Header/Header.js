@@ -10,6 +10,7 @@ import './Header.scss';
 import { logOut } from '../../services/apiService';
 import { toast } from 'react-toastify';
 import { ActionLogOut } from './../../redux/LoginAction/actionLogin';
+import Languages from './Languages';
 function Header() {
   const account = useSelector((state) => state.user.account);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
@@ -69,10 +70,11 @@ function Header() {
             ) : (
               <>
                 <NavDropdown title="Setting" id="navbarScrollingDropdown">
-                  <NavDropdown.Item onClick={() => handleLogOut()}>
-                    Sign out
+                  <NavDropdown.Item>
+                    <uutton onClick={() => handleLogOut()}>Sign out</uutton>
                   </NavDropdown.Item>
                 </NavDropdown>
+                <Languages />
               </>
             )}
           </Nav>

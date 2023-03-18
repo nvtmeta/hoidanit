@@ -1,10 +1,10 @@
 .login-container {
   .header {
-    text-align: right;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    padding-right: 40px;
 
     .btn-login-header {
       border-radius: 5px;
