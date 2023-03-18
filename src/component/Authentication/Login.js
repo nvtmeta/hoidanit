@@ -1,17 +1,17 @@
-import "./Login.scss";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { postLogin } from "../../services/apiService";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import ActionLogin from "../../redux/LoginAction/actionLogin";
-import { ImSpinner6 } from "react-icons/im";
+import './Login.scss';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { postLogin } from '../../services/apiService';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { ActionLogin } from '../../redux/LoginAction/actionLogin';
+import { ImSpinner6 } from 'react-icons/im';
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [IsLoading, setIsLoading] = useState(false);
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
@@ -30,11 +30,11 @@ function Login() {
     };
     const isValidEmail = validateEmail(email);
     if (!isValidEmail) {
-      toast.error("Invalid email");
+      toast.error('Invalid email');
       return;
     }
     if (!password) {
-      toast.error("Invalid password");
+      toast.error('Invalid password');
       return;
     }
     setIsLoading(true);
@@ -45,7 +45,7 @@ function Login() {
       dispatch(ActionLogin(res));
       toast.success(res.EM);
       setIsLoading(false);
-      navigate("/");
+      navigate('/');
       // await fetchUser();
     }
     if (res && +res.EC !== 0) {
@@ -59,7 +59,7 @@ function Login() {
           Don't have an account yet ?
           <button
             className="btn-login-header"
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate('/signup')}
           >
             Sign up
           </button>
@@ -97,13 +97,13 @@ function Login() {
                 onClick={handleLogin}
                 disabled={IsLoading}
               >
-                {IsLoading === true && <ImSpinner6 className="loaderIcon" />}{" "}
+                {IsLoading === true && <ImSpinner6 className="loaderIcon" />}{' '}
                 Login to Amazon
               </button>
             </div>
             <div
               className="btn-returnHome text-center"
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
             >
               <FontAwesomeIcon icon="fas fa-home" className="icon-home " />
               Go to Homepage

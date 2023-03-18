@@ -1,19 +1,33 @@
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import "./Header.scss";
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import './Header.scss';
+import { logOut } from '../../services/apiService';
+import { toast } from 'react-toastify';
+import { ActionLogOut } from './../../redux/LoginAction/actionLogin';
 function Header() {
   const account = useSelector((state) => state.user.account);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogin = () => {
-    navigate("/login");
+    navigate('/login');
+  };
+
+  const handleLogOut = async () => {
+    let res = await logOut(account.email, account.refresh_token);
+    if (res && res.EC === 0) {
+      // clean data redux
+      dispatch(ActionLogOut());
+      navigate('/login');
+    } else {
+      toast.error(res.EM);
+    }
   };
   return (
     <Navbar bg="light" expand="lg" c lassName="header">
@@ -25,7 +39,7 @@ function Header() {
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
+            style={{ maxHeight: '100px' }}
             navbarScroll
           >
             <NavLink className="nav-link" to="/">
@@ -47,7 +61,7 @@ function Header() {
                 </button>
                 <button
                   className="btn-signUp"
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate('/signup')}
                 >
                   Sign up
                 </button>
@@ -55,9 +69,9 @@ function Header() {
             ) : (
               <>
                 <NavDropdown title="Setting" id="navbarScrollingDropdown">
-                  <NavDropdown.Item>Sign out</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item>Profile</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => handleLogOut()}>
+                    Sign out
+                  </NavDropdown.Item>
                 </NavDropdown>
               </>
             )}

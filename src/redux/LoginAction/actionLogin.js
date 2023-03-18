@@ -1,10 +1,14 @@
-export const FETCH_USER_lOGIN = "FETCH_USER_lOGIN";
+export const FETCH_USER_lOGIN = 'FETCH_USER_lOGIN';
+export const FETCH_USER_lOGOUT = 'FETCH_USER_lOGOUT';
 
-function ActionLogin(res) {
+export function ActionLogin(res) {
   return {
     type: FETCH_USER_lOGIN,
     payload: res,
   };
 }
-
-export default ActionLogin;
+export function ActionLogOut() {
+  return {
+    type: FETCH_USER_lOGOUT,
+  };
+}
