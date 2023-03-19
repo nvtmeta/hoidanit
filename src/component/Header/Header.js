@@ -66,6 +66,7 @@ function Header() {
                 >
                   Sign up
                 </button>
+                <Languages />
               </>
             ) : (
               <>
