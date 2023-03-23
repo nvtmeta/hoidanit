@@ -5,25 +5,29 @@
     font-weight: 600;
   }
   .content {
+    height: 400px;
     display: flex;
     .content-left {
+      padding: 10px;
       width: 50%;
-      border: 1px solid green;
       display: flex;
       flex-wrap: wrap;
+      gap: 12px;
       .content-item {
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 50%;
-        height: 150px;
+        width: calc(50% - 10px);
         border: 1px solid #ccc;
-        padding: 10px;
+        flex-direction: column;
+        font-size: 1rem;
+        font-weight: 600;
       }
     }
     .content-right {
+      height: 400px;
       width: 50%;
-      border: 1px solid red;
     }
   }
 }
